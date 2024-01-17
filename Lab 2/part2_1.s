@@ -9,7 +9,22 @@ _start:
 movia r10, 718293 # r10 is where you put the student number being searched for
 
 /* Your code goes here */
+movia r8, Snumbers
+movia r9, Grades
+movia r13, result
 
+loop: ldw r11, (r8) # load number in list into r11
+	ldw r13, (r9) # load corresponding grade from student number
+	beq r0, r11, dne # reached end of list; student number not found
+	beq r10, r11, finished  # check if student number equal to one being searched for
+	addi r8, r8, 4
+	addi r9, r9, 4
+	br loop	
+	
+dne: movi r13, -1
+	br iloop	
+
+finished: stw r13, (r13)
 
 iloop: br iloop
 
