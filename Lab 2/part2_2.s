@@ -10,29 +10,35 @@ movia r10, 718293 		# r10 is where you put the student number being searched for
 
 /* Your code goes here */
 movia r8, Snumbers		# address of Snumbers -> r8
+addi r8, r8, 3
+
 movia r9, Grades		# address of Grades   -> r9
 movia r12, result		# address of result   -> r12
 
 loop: ldw r11, (r8) 		# load number in list into r11
-	ldw r13, (r9) 			# load corresponding grade from student number
+	ldb r13, (r9) 			# load corresponding grade from student number
 	beq r0, r11, dne 		# reached end of list; student number not found
 	beq r10, r11, finished  # check if student number equal to one being searched for
 	addi r8, r8, 4			# traverse student number list
-	addi r9, r9, 4			# traverse grades list
+	addi r9, r9, 1			# traverse grades list
 	br loop					# run loop from the start
 	
 dne: movi r13, -1			# student number not found, assign -1 to r13
 
-finished: stw r13, (r12)	# assign value in r13 -> result 
+finished: stb r13, (r12)	# assign value in r13 -> result
+	.equ LEDs, 0xFF200000
+	movia r23, LEDs 		# r23 holds LED address
+	stwio r13, (r23)		# put matching grade into address holding LEDs
 
 iloop: br iloop				# end of program
 
 .data # the numbers in memory that are the data
+.align 2
 
 /* result should hold the grade of the student number 
    put into r10, or -1 if the student number isn’t found */
-
-result: .word 0
+   
+result: .byte 0
 
 /* Snumbers is the list terminated by a zero of the student numbers */
 Snumbers: .word 10392584, 423195, 644370, 496059, 296800
@@ -41,6 +47,6 @@ Snumbers: .word 10392584, 423195, 644370, 496059, 296800
 .word 467872, 887795, 681936, 0
 
 /* Grades is the corresponding list with the grades, in the same order*/
-Grades: .word 99, 68, 90, 85, 91, 67, 80
-.word 66, 95, 91, 91, 99, 76, 68
-.word 69, 93, 90, 72
+Grades: .byte 99, 68, 90, 85, 91, 67, 80
+.byte 66, 95, 91, 91, 99, 76, 68
+.byte 69, 93, 90, 72
