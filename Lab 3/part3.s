@@ -15,7 +15,7 @@ _start:
 	movi r11, 0
 	movi r12, 0
 	movi r10, 32			# Upper limit of 32-bit word
-	movia r15, 0xfffffff 	# For XOR
+	movia r15, 0xffffffff 	# For XOR
 	
 WordLoop:
     ldw r4, (r14)           		# Store value of InputWord -> r4 (INPUT)
@@ -29,9 +29,9 @@ ULargestOnes:
     br WordLoop2
 
 WordLoop2:
+    ldw r4, (r14)           		# Restore r4 to original value
     xor r4, r4, r15         		# Flip bits to count for zeroes
     call ONES              			# Function call
-    ldw r4, (r14)           		# Restore r4 to original value
     addi r14, r14, 4        		# Increment to next word
     bgeu r2, r12, ULargestZeroes 	# Branch if current count is greater or equal
     br WordLoop
