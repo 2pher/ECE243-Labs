@@ -70,83 +70,83 @@ KEY_ISR:
 		beq 	r4, r9, KEY3
 	
 KEY0:
-		and 	r5, r5, r10			# Isolate value for HEX0
-		beq 	r5, r0, DISPLAY_HEX0
-		movi 	r4, 0x10
-		movi 	r5, 0
-		call	HEX_DISP
-		br		END_HEX_ISR
+	and 	r5, r5, r10			# Isolate value for HEX0
+	beq 	r5, r0, DISPLAY_HEX0
+	movi 	r4, 0x10
+	movi 	r5, 0
+	call	HEX_DISP
+	br		END_HEX_ISR
 		
 		
 DISPLAY_HEX0:
-		movi	r4, 0
-		movi	r5, 0
-		call	HEX_DISP
-		br		END_HEX_ISR
-			
-KEY1:
-		and 	r5, r5, r11			# Isolate value for HEX1
-		beq 	r5, r0, DISPLAY_HEX1
-		movi 	r4, 0x10
-		movi 	r5, 1
-		call	HEX_DISP
-		br		END_HEX_ISR
+	movi	r4, 0
+	movi	r5, 0
+	call	HEX_DISP
+	br		END_HEX_ISR
 		
+KEY1:
+	and 	r5, r5, r11			# Isolate value for HEX1
+	beq 	r5, r0, DISPLAY_HEX1
+	movi 	r4, 0x10
+	movi 	r5, 1
+	call	HEX_DISP
+	br		END_HEX_ISR
+	
 DISPLAY_HEX1:
-		movi	r4, 1
-		movi	r5, 1
-		call	HEX_DISP
-		br		END_HEX_ISR
+	movi	r4, 1
+	movi	r5, 1
+	call	HEX_DISP
+	br		END_HEX_ISR
 
 KEY2:
-		and 	r5, r5, r12			# Isolate value for HEX2
-		beq 	r5, r0, DISPLAY_HEX2
-		movi 	r4, 0x10
-		movi 	r5, 2
-		call	HEX_DISP
-		br		END_HEX_ISR
+	and 	r5, r5, r12			# Isolate value for HEX2
+	beq 	r5, r0, DISPLAY_HEX2
+	movi 	r4, 0x10
+	movi 	r5, 2
+	call	HEX_DISP
+	br		END_HEX_ISR
 	
 DISPLAY_HEX2:
-		movi	r4, 2
-		movi	r5, 2
-		call	HEX_DISP
-		br		END_HEX_ISR
+	movi	r4, 2
+	movi	r5, 2
+	call	HEX_DISP
+	br		END_HEX_ISR
 	
 KEY3: 
-		and 	r5, r5, r13			# Isolate value for HEX3
-		beq 	r5, r0, DISPLAY_HEX3
-		movi 	r4, 0x10
-		movi 	r5, 3
-		call	HEX_DISP
-		br		END_HEX_ISR
+	and 	r5, r5, r13			# Isolate value for HEX3
+	beq 	r5, r0, DISPLAY_HEX3
+	movi 	r4, 0x10
+	movi 	r5, 3
+	call	HEX_DISP
+	br		END_HEX_ISR
 
 DISPLAY_HEX3:
-		movi	r4, 3
-		movi	r5, 3
-		call	HEX_DISP
-		br		END_HEX_ISR
+	movi	r4, 3
+	movi	r5, 3
+	call	HEX_DISP
+	br		END_HEX_ISR
 	
 END_HEX_ISR:
-		movia 	r2, KEYs	
-		movi	r4, 0xF
-		stwio	r4, 12(r2)
+	movia 	r2, KEYs	
+	movi	r4, 0xF
+	stwio	r4, 12(r2)
+	
+       ldw 	r2, 0(sp)
+       ldw 	r3, 4(sp)
+       ldw 	r4, 8(sp)
+       ldw 	r5, 12(sp)
+       ldw 	r6, 16(sp)
+       ldw 	r7, 20(sp)
+       ldw 	r8, 24(sp)
+       ldw 	r9, 28(sp)
+       ldw 	r10, 32(sp)
+       ldw 	r11, 36(sp)
+       ldw 	r12, 40(sp)
+       ldw 	r13, 44(sp)
+	   ldw		ra,  48(sp)
 		
-		   ldw 	r2, 0(sp)
-		   ldw 	r3, 4(sp)
-		   ldw 	r4, 8(sp)
-		   ldw 	r5, 12(sp)
-		   ldw 	r6, 16(sp)
-		   ldw 	r7, 20(sp)
-		   ldw 	r8, 24(sp)
-		   ldw 	r9, 28(sp)
-		   ldw 	r10, 32(sp)
-		   ldw 	r11, 36(sp)
-		   ldw 	r12, 40(sp)
-		   ldw 	r13, 44(sp)
-		   ldw		ra,  48(sp)
-			
-		addi	sp, sp, 48
-		ret
+	addi	sp, sp, 48
+	ret
 
 /*********************************************************************************
  * Set where to go upon reset
