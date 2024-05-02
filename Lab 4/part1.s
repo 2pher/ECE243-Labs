@@ -1,7 +1,6 @@
 .global _start
 _start:
-	.equ LEDs, 0xFF200000
-	movia r10, LEDs 		# r23 holds LED address
+	movia r10, 0xFF200000	# LEDs
 	movia r9, 0xff200050 	# KEYS
 	movi r3, 0				# KEY0 indicator
 	movi r4, 0				# KEY1 indicator
